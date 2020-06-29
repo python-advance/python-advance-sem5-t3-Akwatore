@@ -50,12 +50,15 @@
 ### Примеры
 Раз уж мы ознакомились со всеми аспектами функций в Python, давайте продемонстрируем их в коде:
 
-```def hello_world():
-    print('Hello world!')```
+```
+def hello_world():
+    print('Hello world!')
+```
     
 Здесь мы определили простую функцию. Из фрагмента кода далее вы увидите, что эта функция, как и классы с числами, является объектом в Python:
 
-```>>> def hello_world():
+```
+>>> def hello_world():
 ...     print('Hello world!')
 ...
 >>> type(hello_world)
@@ -66,7 +69,8 @@
 >>> type(Hello)
 <class 'type'>
 >>> type(10)
-<class 'int'>```
+<class 'int'>
+```
 
 Как вы заметили, функция hello_world принадлежит типу <class 'function'>. Это означает, что она 
 является объектом класса function. Кроме того, класс, который мы определили, принадлежит классу type. 
@@ -76,22 +80,27 @@
 
 Мы можем хранить функции в переменных:
 
-```>>> hello = hello_world
+```
+>>> hello = hello_world
 >>> hello()
 Hello world!
+```
 Определять функции внутри других функций:
 
+```
 >>> def wrapper_function():
 ...     def hello_world():
 ...         print('Hello world!')
 ...     hello_world()
 ...
 >>> wrapper_function()
-Hello world!```
+Hello world!
+```
 
 Передавать функции в качестве аргументов и возвращать их из других функций:
 
-```>>> def higher_order(func):
+```
+>>> def higher_order(func):
 ...     print('Получена функция {} в качестве аргумента'.format(func))
 ...     func()
 ...     return func
@@ -99,34 +108,39 @@ Hello world!```
 >>> higher_order(hello_world)
 Получена функция <function hello_world at 0x032C7FA8> в качестве аргумента
 Hello world!
-<function hello_world at 0x032C7FA8>```
+<function hello_world at 0x032C7FA8>
+```
 
 ## Как работают декораторы
 
 Раз мы знаем, как работают функции высших порядков, теперь мы можем понять как работают декораторы. Сначала посмотрим на пример декоратора:
 
-```def decorator_function(func):
+```
+def decorator_function(func):
     def wrapper():
         print('Функция-обёртка!')
         print('Оборачиваемая функция: {}'.format(func))
         print('Выполняем обёрнутую функцию...')
         func()
         print('Выходим из обёртки')
-    return wrapper```
+    return wrapper
+ ```
 
 Здесь decorator_function() является функцией-декоратором. Как вы могли заметить, она является функцией 
 высшего порядка, так как принимает функцию в качестве аргумента, а также возвращает функцию. 
 Внутри decorator_function() мы определили другую функцию, обёртку, так сказать, которая обёртывает 
 функцию-аргумент и затем изменяет её поведение. Декоратор возвращает эту обёртку. Теперь посмотрим на декоратор в действии:
 
-```>>> @decorator_function
+```
+>>> @decorator_function
 ... def hello_world():
 ...     print('Hello world!')
 ...
 >>> hello_world()
 Оборачиваемая функция: <function hello_world at 0x032B26A8>
 Выполняем обёрнутую функцию...
-Hello world!```
+Hello world!
+```
 
 Выходим из обёртки
 Магия, не иначе! Просто добавив @decorator_function перед определением функции hello_world(), мы модифицировали её поведение. 
@@ -136,7 +150,8 @@ Hello world!```
 
 И хотя этот декоратор мог вызвать вау-эффект, он не очень полезный. Давайте взглянем на другие, более полезные (наверное):
 
-```def benchmark(func):
+```
+def benchmark(func):
     import time
     
     def wrapper():
@@ -151,7 +166,8 @@ def fetch_webpage():
     import requests
     webpage = requests.get('https://google.com')
 
-fetch_webpage()```
+fetch_webpage()
+```
 
 Здесь мы создаём декоратор, замеряющий время выполнения функции. Далее мы используем его на функции, которая делает GET-запрос 
 к главной странице Google. Чтобы измерить скорость, мы сначала сохраняем время перед выполнением обёрнутой функции, выполняем её, 
@@ -167,7 +183,8 @@ fetch_webpage()```
 Используем аргументы и возвращаем значения
 В приведённых выше примерах декораторы ничего не принимали и не возвращали. Модифицируем наш декоратор для измерения времени выполнения:
 
-```def benchmark(func):
+```
+def benchmark(func):
     import time
     
     def wrapper(*args, **kwargs):
@@ -185,12 +202,15 @@ def fetch_webpage(url):
     return webpage.text
 
 webpage = fetch_webpage('https://google.com')
-print(webpage)```
+print(webpage)
+```
 
 Вывод после выполнения:
 
-```[*] Время выполнения: 1.4475083351135254 секунд.
-<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage"........```
+```
+[*] Время выполнения: 1.4475083351135254 секунд.
+<!doctype html><html itemscope="" itemtype="http://schema.org/WebPage"........
+```
 
 Как вы видите, аргументы декорируемой функции передаются функции-обёртке, после чего с ними можно делать что угодно. 
 Можно изменять аргументы и затем передавать их декорируемой функции, а можно оставить их как есть или вовсе забыть про 
@@ -199,7 +219,8 @@ print(webpage)```
 ## Декораторы с аргументами
 Мы также можем создавать декораторы, которые принимают аргументы. Посмотрим на пример:
 
-```def benchmark(iters):
+```
+def benchmark(iters):
     def actual_decorator(func):
         import time
         
@@ -224,7 +245,8 @@ def fetch_webpage(url):
     return webpage.text
 
 webpage = fetch_webpage('https://google.com')
-print(webpage)```
+print(webpage)
+```
 
 Здесь мы модифицировали наш старый декоратор таким образом, чтобы он выполнял декорируемую функцию iters раз, 
 а затем выводил среднее время выполнения. Однако чтобы добиться этого, пришлось воспользоваться природой функций в Python.
@@ -245,7 +267,8 @@ print(webpage)```
 Экземпляры классов/объекты с методом call() тоже можно вызывать, поэтому их можно использовать в качестве декораторов. 
 Эту функциональность можно использовать для создания декораторов, хранящих какое-то состояние. Например, вот декоратор для мемоизации:
 
-```from collections import deque
+```
+from collections import deque
 
 class Memoized:
     def __init__(self, cache_size=100):
@@ -280,6 +303,7 @@ class Memoized:
 @Memoized(cache_size=5)
 def get_not_so_random_number_with_max(max_value):
     import random
-    return random.random() * max_value```
+    return random.random() * max_value
+    ```
     
 Само собой, этот декоратор нужен в основном в демонстрационных целях, в реальном приложении для подобного кеширования стоит использовать functools.lru_cache.

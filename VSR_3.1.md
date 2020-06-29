@@ -304,6 +304,6 @@ class Memoized:
 def get_not_so_random_number_with_max(max_value):
     import random
     return random.random() * max_value
-    ```
+ ```
     
 Само собой, этот декоратор нужен в основном в демонстрационных целях, в реальном приложении для подобного кеширования стоит использовать functools.lru_cache.
